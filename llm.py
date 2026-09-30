@@ -1,4 +1,13 @@
 import os
+
+# Workaround for CrewAI cache_breakpoint being sent
+# to providers that do not support it.
+try:
+    import crewai.llms.cache as crew_cache
+    crew_cache.mark_cache_breakpoint = lambda message: message
+except Exception:
+    pass
+
 from crewai import LLM
 
 
