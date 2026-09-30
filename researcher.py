@@ -4,19 +4,29 @@ from tools import WebSearchTool
 
 
 def create_researcher():
+
     return Agent(
-        role="Web Research Specialist",
+        role="Web Researcher",
+
         goal=(
-            "Find relevant, recent, and trustworthy information "
-            "from multiple web sources."
+            "Find accurate and current information from the web "
+            "using the web_search tool."
         ),
+
         backstory=(
-            "You are a meticulous web researcher. "
-            "You search broadly, compare sources, and collect "
-            "specific evidence rather than relying on assumptions."
+            "You are a careful web researcher. "
+            "When you need information, use the web_search tool. "
+            "When calling web_search, ALWAYS provide a 'query' argument. "
+            "Never provide cursor, id, search, or other arguments. "
+            "The tool call must look like: "
+            "{'query': 'your search question'}."
         ),
-        llm=get_llm(),
+
         tools=[WebSearchTool()],
+
+        llm=get_llm(),
+
         allow_delegation=False,
-        verbose=False,
+
+        verbose=False
     )
