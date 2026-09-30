@@ -8,23 +8,27 @@ from ddgs import DDGS
 class WebSearchInput(BaseModel):
     query: str = Field(
         ...,
-        description="The web search query to investigate."
+        description="The exact topic or question to search for on the web."
     )
 
 
 class WebSearchTool(BaseTool):
-    name: str = "Web Search"
+    name: str = "web_search"
+
     description: str = (
         "Search the live web for current information. "
-        "Use this to find reliable sources, facts, dates, "
-        "reports, statistics, and supporting evidence."
+        "Use this tool when you need facts, dates, statistics, "
+        "reports, recent information, or supporting sources. "
+        "You must provide a search query."
     )
+
     args_schema: Type[BaseModel] = WebSearchInput
 
     def _run(self, query: str) -> str:
+
         try:
             results = DDGS().text(
-                query,
+                query=query,
                 max_results=8
             )
 
@@ -34,6 +38,7 @@ class WebSearchTool(BaseTool):
             formatted = []
 
             for i, result in enumerate(results, start=1):
+
                 title = result.get("title", "Untitled")
                 url = result.get("href", "")
                 body = result.get("body", "")
