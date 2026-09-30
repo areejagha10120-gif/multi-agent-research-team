@@ -1,7 +1,6 @@
 import os
 
-# Workaround for CrewAI cache_breakpoint being sent
-# to providers that do not support it.
+# CrewAI workaround for Groq cache_breakpoint issue
 try:
     import crewai.llms.cache as crew_cache
     crew_cache.mark_cache_breakpoint = lambda message: message
@@ -21,7 +20,7 @@ def get_llm():
         )
 
     return LLM(
-        model="groq/openai/gpt-oss-120b",
+        model="openai/gpt-oss-120b",
         api_key=api_key,
         temperature=0.2,
     )
