@@ -5,24 +5,25 @@ from crewai import LLM
 
 def get_llm():
     """
-    Create the Gemini LLM used by all CrewAI agents.
+    Create the Claude LLM used by all CrewAI agents.
     """
 
     try:
-        api_key = st.secrets.get("GEMINI_API_KEY")
+        api_key = st.secrets.get("ANTHROPIC_API_KEY")
     except Exception:
         api_key = None
 
     if not api_key:
-        api_key = os.getenv("GEMINI_API_KEY")
+        api_key = os.getenv("ANTHROPIC_API_KEY")
 
     if not api_key:
         raise ValueError(
-            "GEMINI_API_KEY is missing. "
-            "Add your Google AI Studio API key to Streamlit Secrets."
+            "ANTHROPIC_API_KEY is missing. "
+            "Add your Anthropic API key to Streamlit Secrets."
         )
 
     return LLM(
-        model="gemini/gemini-3.8-flash",
+        model="anthropic/claude-sonnet-4-5",
         api_key=api_key,
+        temperature=0.2,
     )
