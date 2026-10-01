@@ -25,5 +25,4 @@ def get_llm():
     return LLM(
         model="anthropic/claude-sonnet-4-5",
         api_key=api_key,
-        temperature=0.2,
     )
